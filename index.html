@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>고객센터 홈</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f8f9fc;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #007bff;
+    }
+    .desc {
+      margin-bottom: 40px;
+      color: #555;
+    }
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      text-decoration: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      transition: background-color 0.2s ease;
+      width: 200px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>고객센터 게시판</h1>
+  <p class="desc">문의사항 접수 및 공지사항 열람이 가능한 간단한 게시판입니다.</p>
+
+  <div class="btn-container">
+    <a href="contact.html" class="btn">문의 작성하기</a>
+    <a href="notices.html" class="btn">공지사항 보기</a>
+    <a href="inquiries.html" class="btn">문의 내역 보기</a>
+    <a href="admin.html" class="btn">공지사항 작성 (관리자)</a>
+  </div>
+</body>
+</html>
