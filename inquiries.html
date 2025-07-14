@@ -4,15 +4,75 @@
   <meta charset="UTF-8">
   <title>문의 게시판</title>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-    h1 { color: #0d47a1; }
-    .card { border: 1px solid #bbdefb; border-radius: 8px; padding: 16px; margin: 12px 0; }
-    .reply { background: #e3f2fd; padding: 12px; border-radius: 6px; margin-top: 10px; }
+    body {
+      font-family: 'Apple SD Gothic Neo', sans-serif;
+      background-color: #f2f6ff;
+      margin: 0;
+      padding: 40px 16px;
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      color: #0d47a1;
+      font-size: 26px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .card {
+      border: 1px solid #d1e3f8;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 20px;
+      background-color: #fafcff;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .card b {
+      font-size: 17px;
+      color: #0d47a1;
+    }
+
+    .card small {
+      font-size: 14px;
+      color: #777;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #333;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .reply {
+      background-color: #e3f2fd;
+      padding: 16px;
+      border-left: 4px solid #2196f3;
+      border-radius: 6px;
+      margin-top: 18px;
+      font-size: 15px;
+      color: #1a237e;
+    }
   </style>
 </head>
 <body>
-  <h1>문의 게시판</h1>
-  <div id="list"></div>
+  <div class="container">
+    <h1>문의 게시판</h1>
+    <div id="list"></div>
+  </div>
 
   <!-- Firebase 라이브러리 -->
   <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
@@ -46,7 +106,7 @@
           div.innerHTML = `
             <b>${d.name ?? "이름 없음"}</b> · <small>${date}</small><br>
             <p>${d.message ?? "내용 없음"}</p>
-            ${d.reply ? `<div class="reply"><b>답변:</b><br>${d.reply}</div>` : ""}
+            ${d.reply ? `<div class="reply"><strong>답변:</strong><br>${d.reply}</div>` : ""}
           `;
           list.appendChild(div);
         });
@@ -54,5 +114,3 @@
   </script>
 </body>
 </html>
-
-
