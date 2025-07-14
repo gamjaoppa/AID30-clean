@@ -13,7 +13,7 @@
     }
 
     .container {
-      max-width: 560px;
+      max-width: 480px;
       margin: 80px auto;
       padding: 40px 24px;
       background-color: #ffffff;
@@ -23,9 +23,17 @@
     }
 
     h1 {
-      font-size: 24px;
-      color: #0d47a1;
+      font-size: 28px;
+      font-weight: bold;
       margin-bottom: 16px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, #1e3a8a, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
     }
 
     .desc {
@@ -64,7 +72,7 @@
         padding: 30px 20px;
       }
       h1 {
-        font-size: 20px;
+        font-size: 22px;
       }
       .btn {
         font-size: 15px;
@@ -74,7 +82,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>대구한의대학교 AID 30+ 고객센터 게시판</h1>
+    <h1 class="gradient-text">대구한의대학교 AID 30+ 고객센터 게시판</h1>
     <p class="desc">문의사항 접수 및 공지사항 열람이 가능한 간단한 게시판입니다.</p>
 
     <div class="btn-container">
@@ -86,4 +94,3 @@
   </div>
 </body>
 </html>
-
