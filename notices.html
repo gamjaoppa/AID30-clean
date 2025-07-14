@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>공지사항</title>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+    h1 { color: #0d47a1; }
+    .notice { border-bottom: 1px solid #bbdefb; padding: 12px 0; }
+    .notice h3 { margin: 0; color: #1976d2; }
+  </style>
+</head>
+<body>
+  <h1>공지사항</h1>
+  <div id="ntList"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    db.collection("notices").orderBy("createdAt", "desc").onSnapshot(snap => {
+      ntList.innerHTML = "";
+      snap.forEach(doc => {
+        const d = doc.data();
+        ntList.innerHTML += `
+          <div class="notice">
+            <h3>${d.title}</h3>
+            <small>${d.createdAt?.toDate().toLocaleDateString()}</small>
+            <p>${d.body}</p>
+          </div>
+        `;
+      });
+    });
+  </script>
+</body>
+</html>

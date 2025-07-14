@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>관리자 페이지</title>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: auto; padding: 20px; }
+    h1 { color: #0d47a1; }
+    .card { border: 1px solid #bbdefb; padding: 16px; border-radius: 8px; margin: 12px 0; }
+    textarea { width: 100%; height: 60px; margin-top: 8px; }
+    button { background: #1976d2; color: white; border: none; padding: 8px 14px; margin-top: 5px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>관리자 로그인</h1>
+  <div id="loginBox">
+    이메일 <input id="email" type="email">
+    비밀번호 <input id="pw" type="password">
+    <button onclick="login()">로그인</button>
+  </div>
+
+  <div id="adminArea" style="display:none;">
+    <h2>문의 답변</h2>
+    <div id="inqList"></div>
+
+    <h2>공지 작성</h2>
+    제목 <input id="ntTitle" style="width:100%"><br>
+    내용 <textarea id="ntBody"></textarea><br>
+    <button onclick="postNotice()">공지 올리기</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    function login() {
+      auth.signInWithEmailAndPassword(email.value, pw.value).catch(err => alert(err.message));
+    }
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        loginBox.style.display = "none";
+        adminArea.style.display = "block";
+        loadInquiries();
+      }
+    });
+
+    function loadInquiries() {
+      db.collection("inquiries").orderBy("createdAt", "desc").onSnapshot(snap => {
+        inqList.innerHTML = "";
+        snap.forEach(doc => {
+          const d = doc.data();
+          const el = document.createElement("div");
+          el.className = "card";
+          el.innerHTML = `
+            <b>${d.name}</b> (${d.email})<br>
+            <small>${d.createdAt?.toDate().toLocaleString()}</small><p>${d.message}</p>
+            <textarea id="rep_${doc.id}">${d.reply || ""}</textarea>
+            <button onclick="saveReply('${doc.id}')">답변 저장</button>
+          `;
+          inqList.appendChild(el);
+        });
+      });
+    }
+
+    function saveReply(id) {
+      const reply = document.getElementById("rep_" + id).value.trim();
+      db.collection("inquiries").doc(id).update({ reply });
+    }
+
+    function postNotice() {
+      db.collection("notices").add({
+        title: ntTitle.value,
+        body: ntBody.value,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        ntTitle.value = "";
+        ntBody.value = "";
+        alert("공지사항이 등록되었습니다.");
+      });
+    }
+  </script>
+</body>
+</html>
