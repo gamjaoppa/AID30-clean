@@ -5,8 +5,416 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>대구한의대학교 AID 30+ 고객센터</title>
   <style>
-    /* (기존 CSS 전부 생략 없이 포함됨 – 네가 작성한 코드 그대로) */
-    /* 여기에 style 전체 삽입된 상태로 유지됨 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f8fafc;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 24px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 20px;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+
+    /* Service Cards */
+    .services {
+      padding: 80px 0;
+      background: white;
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .services h2 {
+      text-align: center;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 48px;
+      color: #1e3a8a;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+
+    .service-card {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid #e5e7eb;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .service-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      color: #1e3a8a;
+    }
+
+    .service-card p {
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+
+    .service-btn {
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .service-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Course Info Section */
+    .course-info {
+      padding: 80px 0;
+      background: #f8fafc;
+    }
+
+    .course-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 48px;
+      color: #1e3a8a;
+    }
+
+    /* Target Audience */
+    .target-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .target-card {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .target-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .target-card h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .target-card .quote {
+      font-style: italic;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .target-card ul {
+      list-style: disc;
+      padding-left: 20px;
+      color: #374151;
+    }
+
+    .target-card ul li {
+      margin-bottom: 8px;
+    }
+
+    .korean-medicine { color: #166534; }
+    .food-industry { color: #c2410c; }
+    .beauty-industry { color: #be185d; }
+
+    /* Curriculum */
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .curriculum-card {
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .online-course {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .offline-course {
+      background: white;
+      border: 1px solid #e5e7eb;
+    }
+
+    .curriculum-card h3 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 24px;
+      color: #1e3a8a;
+    }
+
+    .curriculum-item {
+      margin-bottom: 24px;
+    }
+
+    .curriculum-item h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1e40af;
+    }
+
+    .curriculum-item p {
+      color: #374151;
+      line-height: 1.6;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: #3b82f6;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+
+    .step-content h4 {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+
+    .step-content p {
+      color: #6b7280;
+    }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .feature-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f2937;
+    }
+
+    .feature-content p {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 16px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+
+      .target-grid,
+      .curriculum-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .curriculum-card {
+        padding: 24px;
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -31,18 +439,157 @@
     </div>
   </section>
 
+
+
   <!-- Course Information -->
   <section class="course-info">
     <div class="course-container">
-      <!-- Target / Curriculum / Features 섹션 모두 유지 -->
-      <!-- 네가 작성한 HTML 그대로 포함되어 있음 -->
+      <!-- Target Audience -->
+      <div id="targets">
+        <h2 class="section-title">어떤 분들을 위한 과정인가요?</h2>
+        <div class="target-grid">
+          <div class="target-card">
+            <h3 class="korean-medicine">한의·한방 산업 재직자</h3>
+            <p class="quote">"환자 데이터는 쌓여가는데, 어떻게 활용해야 할지 모르겠어요."</p>
+            <ul>
+              <li>EMR 데이터로 맞춤형 진료 서비스를 제공하고 싶은 분</li>
+              <li>데이터 기반으로 한의원·한방병원 경쟁력을 높이고 싶은 분</li>
+              <li>한방 제품 소비자 패턴을 분석해 시장 기회를 찾고 싶은 분</li>
+            </ul>
+          </div>
+          
+          <div class="target-card">
+            <h3 class="food-industry">식품 산업 재직자</h3>
+            <p class="quote">"빠르게 변하는 소비자 트렌드, 데이터로 예측하고 싶어요."</p>
+            <ul>
+              <li>판매/고객 데이터를 분석해 히트 상품 개발의 실마리를 찾고 싶은 분</li>
+              <li>K-푸드 세계화 전략에 맞춰 데이터 기반 해외 진출 전략을 세우고 싶은 분</li>
+              <li>푸드테크·기능성 식품 등 신사업 성공 가능성을 높이고 싶은 분</li>
+            </ul>
+          </div>
+          
+          <div class="target-card">
+            <h3 class="beauty-industry">뷰티 산업 재직자</h3>
+            <p class="quote">"감(感)에 의존하는 마케팅은 이제 그만! 숫자로 이야기하고 싶어요."</p>
+            <ul>
+              <li>리뷰·판매 데이터를 분석해 소비자 심리를 파악하고 싶은 분</li>
+              <li>K-뷰티 트렌드를 예측하고 데이터 기반 신제품 전략을 세우고 싶은 분</li>
+              <li>온라인 플랫폼 판매 성과를 분석하고 매출을 극대화하고 싶은 분</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curriculum -->
+      <div id="curriculum">
+        <h2 class="section-title">무엇을 배우게 되나요?</h2>
+        <div class="curriculum-grid">
+          <div class="curriculum-card online-course">
+            <h3>1. 데이터 분석 기초 다지기 (온라인)</h3>
+            <div class="curriculum-item">
+              <h4>SQL 기초 – 데이터 다루기 첫걸음</h4>
+              <p>SQL의 핵심 문법을 통해 데이터를 선택, 필터링, 입력하는 방법을 익힙니다.</p>
+            </div>
+            <div class="curriculum-item">
+              <h4>SQL 실전 – 데이터를 정리하고 연결하기</h4>
+              <p>GROUP BY, JOIN, 서브쿼리를 활용해 다중 테이블 데이터를 정리하고 분석합니다.</p>
+            </div>
+            <div class="curriculum-item">
+              <h4>Python & Pandas – 복잡한 데이터 쉽게 다루기</h4>
+              <p>Pandas를 이용해 다양한 데이터 형식을 정리하고, 데이터 처리 실습을 진행합니다.</p>
+            </div>
+            <div class="curriculum-item">
+              <h4>시각화 & 생성형 AI 마케팅 실습</h4>
+              <p>시각화 도구와 생성형 AI(GPT 등)를 활용하여 마케팅 데이터를 분석하고 자동화합니다.</p>
+            </div>
+          </div>
+          
+          <div class="curriculum-card offline-course">
+            <h3>2. AI 마케팅 실무 역량 강화 (오프라인)</h3>
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <h4>산업 데이터 이해 및 정리 실습</h4>
+                <p>산업별 주요 데이터를 분석 가능한 형태로 정제하고, 핵심 인사이트를 도출합니다.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <h4>마케팅 데이터 분석 실습</h4>
+                <p>소비자 행동, 매출 등의 데이터를 활용한 분석과 시각화 실습을 진행합니다.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <h4>AI 분석 자동화 & 해커톤</h4>
+                <p>생성형 AI를 활용해 분석과 시각화 자동화를 실습하고 해커톤으로 문제 해결 능력을 강화합니다.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-number">4</div>
+              <div class="step-content">
+                <h4>마케팅 전략 수립 및 캡스톤</h4>
+                <p>데이터 기반 마케팅 전략 기획서 작성과 팀 프로젝트 발표로 실무 역량을 완성합니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div id="features">
+        <h2 class="section-title">왜 이 과정을 선택해야 할까요?</h2>
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">🎯</div>
+            <div class="feature-content">
+              <h4>산업 특화 커리큘럼</h4>
+              <p>한의, 식품, 뷰티 산업 데이터를 활용하여 현업 적용 가능성을 극대화했습니다.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🛠️</div>
+            <div class="feature-content">
+              <h4>실무 중심 프로젝트(PBL)</h4>
+              <p>산업 현장 데이터로 해커톤, 캡스톤을 진행하며 실전 문제 해결 능력을 강화합니다.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">✅</div>
+            <div class="feature-content">
+              <h4>검증된 교육 전문성</h4>
+              <p>대구한의대 K-MEDI 노하우와 유다시티 학습 모델이 결합된 고품질 교육을 제공합니다.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🔄</div>
+            <div class="feature-content">
+              <h4>온·오프라인 융합 교육</h4>
+              <p>온라인에서 기초를, 오프라인 캠프로 실무 역량을 완성하는 효율적 학습을 경험하세요.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🏆</div>
+            <div class="feature-content">
+              <h4>공신력 있는 인증 및 지원</h4>
+              <p>수료 시 디지털 배지를 발급하고, 우수 수료생을 위한 경력 개발을 지원합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
-      <p>&copy; 2025 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
     </div>
   </footer>
 
