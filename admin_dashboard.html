@@ -414,7 +414,214 @@
       cursor: not-allowed;
     }
 
-    /* Loading States */
+    /* File Upload */
+    .file-upload-section {
+      margin-bottom: 24px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .file-input {
+      opacity: 0;
+      position: absolute;
+      z-index: -1;
+    }
+
+    .file-input-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 8px;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .file-input-button:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .file-input-button.dragover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+      transform: scale(1.02);
+    }
+
+    .file-list {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      transition: all 0.3s ease;
+    }
+
+    .file-item:hover {
+      background: #e2e8f0;
+    }
+
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .file-icon {
+      width: 32px;
+      height: 32px;
+      background: #3b82f6;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .file-details {
+      flex: 1;
+    }
+
+    .file-name {
+      font-weight: 500;
+      color: #1f2937;
+      margin-bottom: 2px;
+    }
+
+    .file-size {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .file-remove {
+      background: #ef4444;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .file-remove:hover {
+      background: #dc2626;
+    }
+
+    .upload-progress {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #1e40af);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .progress-text {
+      text-align: center;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    /* Attachment Display */
+    .attachments-section {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .attachments-header {
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .attachment-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .attachment-item:hover {
+      background: #f1f5f9;
+    }
+
+    .attachment-icon {
+      width: 24px;
+      height: 24px;
+      background: #3b82f6;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .attachment-name {
+      flex: 1;
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .attachment-name:hover {
+      text-decoration: underline;
+    }
+
+    .attachment-size {
+      font-size: 12px;
+      color: #6b7280;
+    }
     .loading {
       text-align: center;
       padding: 40px;
@@ -584,6 +791,24 @@
               <textarea id="noticeBody" name="body" required placeholder="공지사항 내용을 입력하세요"></textarea>
             </div>
 
+            <div class="file-upload-section">
+              <label>첨부파일</label>
+              <div class="file-input-wrapper">
+                <input type="file" id="fileInput" class="file-input" multiple accept="*/*">
+                <div class="file-input-button" onclick="document.getElementById('fileInput').click()">
+                  <span>📎</span>
+                  <span>파일을 선택하거나 드래그해서 업로드하세요 (최대 10MB)</span>
+                </div>
+              </div>
+              <div id="fileList" class="file-list"></div>
+              <div id="uploadProgress" class="upload-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill"></div>
+                </div>
+                <div class="progress-text">업로드 중...</div>
+              </div>
+            </div>
+
             <button type="submit" id="submitNoticeBtn" class="submit-btn">공지사항 등록</button>
           </form>
         </div>
@@ -594,7 +819,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
-      <p>&copy; 2025 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
     </div>
   </footer>
 
@@ -602,6 +827,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
   <script>
@@ -621,6 +847,11 @@
     // 전역 객체
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // 전역 변수
+    let selectedFiles = [];
+    let uploadedFiles = [];
 
     // 로그인 상태 확인
     auth.onAuthStateChanged((user) => {
@@ -794,32 +1025,198 @@
       submitBtn.disabled = true;
       submitBtn.textContent = '등록 중...';
 
-      db.collection("notices").add({
-        title: title,
-        body: body,
-        important: important,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
+      // 파일 업로드 후 공지사항 등록
+      uploadFilesAndCreateNotice(title, body, important, submitBtn);
+    });
+
+    // 파일 업로드 및 공지사항 생성
+    async function uploadFilesAndCreateNotice(title, body, important, submitBtn) {
+      try {
+        let attachments = [];
+
+        if (selectedFiles.length > 0) {
+          // 업로드 프로그레스 표시
+          const progressDiv = document.getElementById('uploadProgress');
+          const progressFill = progressDiv.querySelector('.progress-fill');
+          const progressText = progressDiv.querySelector('.progress-text');
+          progressDiv.style.display = 'block';
+
+          // 파일들을 순차적으로 업로드
+          for (let i = 0; i < selectedFiles.length; i++) {
+            const file = selectedFiles[i];
+            const fileName = `notices/${Date.now()}_${file.name}`;
+            const storageRef = storage.ref(fileName);
+            
+            progressText.textContent = `파일 업로드 중... (${i + 1}/${selectedFiles.length})`;
+            
+            const uploadTask = storageRef.put(file);
+            
+            // 업로드 완료 대기
+            await new Promise((resolve, reject) => {
+              uploadTask.on('state_changed',
+                (snapshot) => {
+                  const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  progressFill.style.width = `${progress}%`;
+                },
+                (error) => reject(error),
+                async () => {
+                  const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                  attachments.push({
+                    name: file.name,
+                    url: downloadURL,
+                    size: file.size,
+                    type: file.type
+                  });
+                  resolve();
+                }
+              );
+            });
+          }
+          
+          progressDiv.style.display = 'none';
+        }
+
+        // Firestore에 공지사항 저장
+        await db.collection("notices").add({
+          title: title,
+          body: body,
+          important: important,
+          attachments: attachments,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
         alert('공지사항이 성공적으로 등록되었습니다.');
         
         // 폼 초기화
-        document.getElementById('noticeTitle').value = '';
-        document.getElementById('noticeBody').value = '';
-        document.getElementById('importantNotice').checked = false;
+        resetNoticeForm();
         
-        // 버튼 복원
-        submitBtn.disabled = false;
-        submitBtn.textContent = '공지사항 등록';
-        
-      }).catch(error => {
+      } catch (error) {
         console.error("공지사항 등록 중 오류:", error);
-        alert('공지사항 등록 중 오류가 발생했습니다.');
-        
+        alert('공지사항 등록 중 오류가 발생했습니다: ' + error.message);
+      } finally {
         // 버튼 복원
         submitBtn.disabled = false;
         submitBtn.textContent = '공지사항 등록';
+        document.getElementById('uploadProgress').style.display = 'none';
+      }
+    }
+
+    // 폼 초기화
+    function resetNoticeForm() {
+      document.getElementById('noticeTitle').value = '';
+      document.getElementById('noticeBody').value = '';
+      document.getElementById('importantNotice').checked = false;
+      selectedFiles = [];
+      uploadedFiles = [];
+      updateFileList();
+    }
+
+    // 파일 관련 이벤트 리스너
+    document.addEventListener('DOMContentLoaded', function() {
+      const fileInput = document.getElementById('fileInput');
+      const fileInputButton = document.querySelector('.file-input-button');
+
+      // 파일 선택 이벤트
+      fileInput.addEventListener('change', handleFileSelect);
+
+      // 드래그 앤 드롭 이벤트
+      fileInputButton.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        fileInputButton.classList.add('dragover');
+      });
+
+      fileInputButton.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        fileInputButton.classList.remove('dragover');
+      });
+
+      fileInputButton.addEventListener('drop', function(e) {
+        e.preventDefault();
+        fileInputButton.classList.remove('dragover');
+        
+        const files = Array.from(e.dataTransfer.files);
+        handleFiles(files);
       });
     });
+
+    // 파일 선택 처리
+    function handleFileSelect(e) {
+      const files = Array.from(e.target.files);
+      handleFiles(files);
+    }
+
+    // 파일 처리
+    function handleFiles(files) {
+      for (const file of files) {
+        // 파일 크기 체크 (10MB)
+        if (file.size > 10 * 1024 * 1024) {
+          alert(`파일 "${file.name}"이 10MB를 초과합니다.`);
+          continue;
+        }
+
+        // 중복 파일 체크
+        if (selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+          alert(`파일 "${file.name}"이 이미 선택되었습니다.`);
+          continue;
+        }
+
+        selectedFiles.push(file);
+      }
+
+      updateFileList();
+    }
+
+    // 파일 목록 업데이트
+    function updateFileList() {
+      const fileList = document.getElementById('fileList');
+      
+      if (selectedFiles.length === 0) {
+        fileList.innerHTML = '';
+        return;
+      }
+
+      fileList.innerHTML = selectedFiles.map((file, index) => `
+        <div class="file-item">
+          <div class="file-info">
+            <div class="file-icon">${getFileIcon(file.type)}</div>
+            <div class="file-details">
+              <div class="file-name">${file.name}</div>
+              <div class="file-size">${formatFileSize(file.size)}</div>
+            </div>
+          </div>
+          <div class="file-actions">
+            <button class="file-remove" onclick="removeFile(${index})">삭제</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 파일 제거
+    function removeFile(index) {
+      selectedFiles.splice(index, 1);
+      updateFileList();
+    }
+
+    // 파일 아이콘 얻기
+    function getFileIcon(mimeType) {
+      if (mimeType.startsWith('image/')) return '🖼️';
+      if (mimeType.includes('pdf')) return 'PDF';
+      if (mimeType.includes('word') || mimeType.includes('document')) return 'DOC';
+      if (mimeType.includes('excel') || mimeType.includes('spreadsheet')) return 'XLS';
+      if (mimeType.includes('powerpoint') || mimeType.includes('presentation')) return 'PPT';
+      if (mimeType.includes('text')) return 'TXT';
+      if (mimeType.includes('zip') || mimeType.includes('rar')) return '📦';
+      return '📄';
+    }
+
+    // 파일 크기 포맷
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
   </script>
 </body>
 </html>
