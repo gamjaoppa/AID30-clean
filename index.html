@@ -462,7 +462,7 @@
       transform: translateY(-50%);
       background: white;
       border-radius: 12px;
-      padding: 16px;
+      padding: 12px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
       z-index: 1000;
       transition: all 0.3s ease;
@@ -482,7 +482,7 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .floating-nav li {
@@ -493,12 +493,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 12px;
+      padding: 8px 10px;
       border-radius: 8px;
       text-decoration: none;
       color: #6b7280;
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       transition: all 0.3s ease;
       background: transparent;
     }
@@ -629,8 +629,8 @@
     <div class="nav-container">
       <div class="logo">대구한의대 AID 30+</div>
       <ul class="nav-links">
-        <li><a href="contact.html">📝 문의 작성</a></li>
         <li><a href="notices.html">📢 공지사항</a></li>
+        <li><a href="contact.html">📝 문의 작성</a></li>
         <li><a href="inquiries.html">📋 문의 내역</a></li>
         <li><a href="admin.html">⚙️ 관리자</a></li>
       </ul>
@@ -814,4 +814,118 @@
             <div class="feature-icon">🔄</div>
             <div class="feature-content">
               <h4>온·오프라인 융합 교육</h4>
-              <p>온라인에서 기초를, 오프라인 캠프로 실무 역량을 완성하는 효율적 학습을 경험하세요.</p
+              <p>온라인에서 기초를, 오프라인 캠프로 실무 역량을 완성하는 효율적 학습을 경험하세요.</p>
+            </div>
+          </div>
+          
+          <div class="feature-item">
+            <div class="feature-icon">🏆</div>
+            <div class="feature-content">
+              <h4>공신력 있는 인증 및 지원</h4>
+              <p>수료 시 디지털 배지를 발급하고, 우수 수료생을 위한 경력 개발을 지원합니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2025 대구한의대학교 AID 30+ 집중캠프 고객센터. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 🔥 Firebase SDK 및 초기화 코드 -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
+      authDomain: "aid-30.firebaseapp.com",
+      projectId: "aid-30",
+      storageBucket: "aid-30.firebasestorage.app",
+      messagingSenderId: "349219806494",
+      appId: "1:349219806494:web:0366223e152abbd878bd0f",
+      measurementId: "G-FV4P6YXEM4"
+    };
+
+    // Firebase 초기화
+    firebase.initializeApp(firebaseConfig);
+
+    // 필요 시 사용할 전역 객체
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const rtdb = firebase.database();
+
+    // Floating Navigation 기능
+    document.addEventListener('DOMContentLoaded', function() {
+      const floatingNav = document.getElementById('floatingNav');
+      const navLinks = floatingNav.querySelectorAll('a');
+      const sections = document.querySelectorAll('section[id]');
+      
+      // 스크롤 시 현재 섹션 하이라이트
+      function updateActiveNav() {
+        let currentSection = '';
+        
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentSection = section.id;
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.section === currentSection) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      // 스크롤 시 네비게이션 표시/숨김
+      function toggleFloatingNav() {
+        const scrollY = window.scrollY;
+        const heroHeight = document.querySelector('.hero').offsetHeight;
+        
+        if (scrollY > heroHeight / 2) {
+          floatingNav.classList.remove('hidden');
+        } else {
+          floatingNav.classList.add('hidden');
+        }
+      }
+      
+      // 부드러운 스크롤
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          
+          if (targetSection) {
+            const offsetTop = targetSection.offsetTop - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // 스크롤 이벤트 리스너
+      window.addEventListener('scroll', function() {
+        updateActiveNav();
+        toggleFloatingNav();
+      });
+      
+      // 초기 설정
+      toggleFloatingNav();
+      updateActiveNav();
+    });
+  </script>
+</body>
+</html>
