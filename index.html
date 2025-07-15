@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/* Footer */<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -451,7 +451,72 @@
       line-height: 1.6;
     }
 
-    /* Footer */
+    /* Floating Navigation */
+    .floating-nav {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border: 2px solid #e5e7eb;
+      min-width: 140px;
+    }
+
+    .floating-nav.hidden {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-50%) translateX(100px);
+    }
+
+    .floating-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .floating-nav li {
+      position: relative;
+    }
+
+    .floating-nav a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      background: transparent;
+    }
+
+    .floating-nav a:hover {
+      background: #eff6ff;
+      color: #3b82f6;
+    }
+
+    .floating-nav a.active {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .floating-nav .nav-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
     .footer {
       background: #1f2937;
       color: white;
@@ -467,6 +532,10 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .floating-nav {
+        display: none;
+      }
+
       .nav-links {
         gap: 16px;
       }
@@ -520,6 +589,36 @@
   </style>
 </head>
 <body>
+  <!-- Floating Navigation -->
+  <nav class="floating-nav" id="floatingNav">
+    <ul>
+      <li>
+        <a href="#apply" data-section="apply">
+          <span class="nav-dot"></span>
+          <span>과정 정보</span>
+        </a>
+      </li>
+      <li>
+        <a href="#targets" data-section="targets">
+          <span class="nav-dot"></span>
+          <span>교육 대상</span>
+        </a>
+      </li>
+      <li>
+        <a href="#curriculum" data-section="curriculum">
+          <span class="nav-dot"></span>
+          <span>커리큘럼</span>
+        </a>
+      </li>
+      <li>
+        <a href="#features" data-section="features">
+          <span class="nav-dot"></span>
+          <span>특장점</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
@@ -757,6 +856,71 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
     const rtdb = firebase.database();
+
+    // Floating Navigation 기능
+    document.addEventListener('DOMContentLoaded', function() {
+      const floatingNav = document.getElementById('floatingNav');
+      const navLinks = floatingNav.querySelectorAll('a');
+      const sections = document.querySelectorAll('section[id]');
+      
+      // 스크롤 시 현재 섹션 하이라이트
+      function updateActiveNav() {
+        let currentSection = '';
+        
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            currentSection = section.id;
+          }
+        });
+        
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.section === currentSection) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      // 스크롤 시 네비게이션 표시/숨김
+      function toggleFloatingNav() {
+        const scrollY = window.scrollY;
+        const heroHeight = document.querySelector('.hero').offsetHeight;
+        
+        if (scrollY > heroHeight / 2) {
+          floatingNav.classList.remove('hidden');
+        } else {
+          floatingNav.classList.add('hidden');
+        }
+      }
+      
+      // 부드러운 스크롤
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          
+          if (targetSection) {
+            const offsetTop = targetSection.offsetTop - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+      
+      // 스크롤 이벤트 리스너
+      window.addEventListener('scroll', function() {
+        updateActiveNav();
+        toggleFloatingNav();
+      });
+      
+      // 초기 설정
+      toggleFloatingNav();
+      updateActiveNav();
+    });
   </script>
 </body>
 </html>
