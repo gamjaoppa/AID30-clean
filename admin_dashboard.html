@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>관리자 대시보드 - 대구한의대학교 AID 30+</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f8fafc;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Dashboard Section */
+    .dashboard-section {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .tab {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .tab:hover:not(.active) {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+    }
+
+    /* Tab Content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Inquiries Tab */
+    .inquiries-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .inquiry-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .inquiry-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .inquiry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .inquiry-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin: 0;
+    }
+
+    .inquiry-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .inquiry-author {
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .inquiry-date {
+      opacity: 0.8;
+    }
+
+    .inquiry-content {
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .reply-section {
+      margin-top: 16px;
+    }
+
+    .reply-section label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f2937;
+      font-size: 15px;
+    }
+
+    .reply-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 12px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-family: inherit;
+      resize: vertical;
+      transition: all 0.3s ease;
+    }
+
+    .reply-textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .reply-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .reply-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .reply-btn:disabled {
+      background: #9ca3af;
+      transform: none;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .existing-reply {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .existing-reply-header {
+      font-weight: 600;
+      color: #0369a1;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .existing-reply-content {
+      color: #0369a1;
+      line-height: 1.6;
+    }
+
+    /* Notice Creation Tab */
+    .notice-form {
+      background: #f8fafc;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .form-header h2 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f2937;
+      font-size: 15px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background-color: white;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 200px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 16px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+
+    .submit-btn:disabled {
+      background: #9ca3af;
+      transform: none;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Loading States */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #6b7280;
+    }
+
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e5e7eb;
+      border-top: 3px solid #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .no-data-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        text-align: center;
+      }
+
+      .inquiry-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .inquiry-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .notice-form {
+        padding: 24px;
+      }
+
+      .dashboard-section {
+        padding: 40px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">대구한의대 AID 30+</a>
+      <ul class="nav-links">
+        <li><a href="contact.html">📝 문의 작성</a></li>
+        <li><a href="notices.html">📢 공지사항</a></li>
+        <li><a href="inquiries.html">📋 문의 내역</a></li>
+        <li><a href="admin.html" class="active">⚙️ 관리자</a></li>
+        <li><button class="logout-btn" onclick="logout()">로그아웃</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <h1>관리자 대시보드</h1>
+      <p>문의 답변 및 공지사항 관리</p>
+    </div>
+  </section>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard-section">
+    <div class="dashboard-container">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('inquiries')">📋 문의 관리</button>
+        <button class="tab" onclick="switchTab('notices')">📢 공지사항 작성</button>
+      </div>
+
+      <!-- Inquiries Tab -->
+      <div id="inquiries-tab" class="tab-content active">
+        <div id="inquiries-loading" class="loading">
+          <div class="loading-spinner"></div>
+          <p>문의 내역을 불러오는 중...</p>
+        </div>
+
+        <div id="inquiries-list" class="inquiries-list" style="display: none;"></div>
+
+        <div id="no-inquiries" class="no-data" style="display: none;">
+          <div class="no-data-icon">📝</div>
+          <h3>등록된 문의가 없습니다</h3>
+          <p>새로운 문의가 등록되면 여기에 표시됩니다.</p>
+        </div>
+      </div>
+
+      <!-- Notice Creation Tab -->
+      <div id="notices-tab" class="tab-content">
+        <div class="notice-form">
+          <div class="form-header">
+            <h2>공지사항 작성</h2>
+            <p>새로운 공지사항을 작성해주세요</p>
+          </div>
+
+          <form id="noticeForm">
+            <div class="form-group">
+              <label for="noticeTitle">제목 *</label>
+              <input type="text" id="noticeTitle" name="title" required placeholder="공지사항 제목을 입력하세요">
+            </div>
+
+            <div class="checkbox-group">
+              <input type="checkbox" id="importantNotice" name="important">
+              <label for="importantNotice">중요 공지사항으로 설정</label>
+            </div>
+
+            <div class="form-group">
+              <label for="noticeBody">내용 *</label>
+              <textarea id="noticeBody" name="body" required placeholder="공지사항 내용을 입력하세요"></textarea>
+            </div>
+
+            <button type="submit" id="submitNoticeBtn" class="submit-btn">공지사항 등록</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 🔥 Firebase SDK 및 초기화 코드 -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
+      authDomain: "aid-30.firebaseapp.com",
+      projectId: "aid-30",
+      storageBucket: "aid-30.firebasestorage.app",
+      messagingSenderId: "349219806494",
+      appId: "1:349219806494:web:0366223e152abbd878bd0f",
+      measurementId: "G-FV4P6YXEM4"
+    };
+
+    // Firebase 초기화
+    firebase.initializeApp(firebaseConfig);
+
+    // 전역 객체
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // 로그인 상태 확인
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // 로그인되지 않은 경우 admin.html로 리다이렉트
+        window.location.href = 'admin.html';
+        return;
+      }
+      
+      // 로그인된 경우 문의 내역 로드
+      loadInquiries();
+    });
+
+    // 탭 전환 함수
+    function switchTab(tabName) {
+      // 모든 탭과 콘텐츠 비활성화
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      // 선택된 탭과 콘텐츠 활성화
+      event.target.classList.add('active');
+      document.getElementById(tabName + '-tab').classList.add('active');
+    }
+
+    // 로그아웃 함수
+    function logout() {
+      if (confirm('로그아웃 하시겠습니까?')) {
+        auth.signOut().then(() => {
+          window.location.href = 'admin.html';
+        }).catch((error) => {
+          console.error('로그아웃 오류:', error);
+          alert('로그아웃 중 오류가 발생했습니다.');
+        });
+      }
+    }
+
+    // 문의 내역 로드
+    function loadInquiries() {
+      const loadingEl = document.getElementById("inquiries-loading");
+      const listEl = document.getElementById("inquiries-list");
+      const noInquiriesEl = document.getElementById("no-inquiries");
+
+      db.collection("inquiries")
+        .orderBy("createdAt", "desc")
+        .onSnapshot(snapshot => {
+          // 로딩 숨기기
+          loadingEl.style.display = "none";
+          
+          if (snapshot.empty) {
+            // 문의가 없는 경우
+            listEl.style.display = "none";
+            noInquiriesEl.style.display = "block";
+            return;
+          }
+
+          // 문의가 있는 경우
+          noInquiriesEl.style.display = "none";
+          listEl.style.display = "flex";
+          listEl.innerHTML = "";
+
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            const date = data.createdAt?.toDate ? 
+              data.createdAt.toDate().toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              }) : "시간 정보 없음";
+
+            const inquiryCard = document.createElement("div");
+            inquiryCard.className = "inquiry-card";
+            
+            inquiryCard.innerHTML = `
+              <div class="inquiry-header">
+                <h3 class="inquiry-title">${data.subject || data.message?.substring(0, 50) + '...' || "제목 없음"}</h3>
+                <div class="inquiry-meta">
+                  <span class="inquiry-author">${data.name || "익명"}</span>
+                  <span class="inquiry-date">${date}</span>
+                </div>
+              </div>
+              <div class="inquiry-content">
+                ${data.message ? data.message.replace(/\n/g, '<br>') : "내용 없음"}
+              </div>
+              ${data.reply ? `
+                <div class="existing-reply">
+                  <div class="existing-reply-header">
+                    💬 기존 답변
+                  </div>
+                  <div class="existing-reply-content">
+                    ${data.reply.replace(/\n/g, '<br>')}
+                  </div>
+                </div>
+              ` : ""}
+              <div class="reply-section">
+                <label for="reply-${doc.id}">${data.reply ? '답변 수정' : '답변 작성'}</label>
+                <textarea 
+                  id="reply-${doc.id}" 
+                  class="reply-textarea" 
+                  placeholder="${data.reply ? '기존 답변을 수정하거나 새로운 답변을 작성하세요...' : '답변을 작성해주세요...'}"
+                >${data.reply || ''}</textarea>
+                <button 
+                  class="reply-btn" 
+                  onclick="saveReply('${doc.id}')"
+                >
+                  ${data.reply ? '답변 수정' : '답변 등록'}
+                </button>
+              </div>
+            `;
+            
+            listEl.appendChild(inquiryCard);
+          });
+        }, error => {
+          console.error("문의 내역 로드 중 오류:", error);
+          loadingEl.innerHTML = `
+            <p style="color: #ef4444;">문의 내역을 불러오는 중 오류가 발생했습니다.</p>
+            <p style="color: #6b7280; font-size: 14px;">잠시 후 다시 시도해주세요.</p>
+          `;
+        });
+    }
+
+    // 답변 저장
+    function saveReply(docId) {
+      const textarea = document.getElementById(`reply-${docId}`);
+      const reply = textarea.value.trim();
+      
+      if (!reply) {
+        alert('답변 내용을 입력해주세요.');
+        return;
+      }
+
+      // 버튼 비활성화
+      const button = event.target;
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = '저장 중...';
+
+      db.collection("inquiries").doc(docId).update({
+        reply: reply,
+        repliedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        alert('답변이 성공적으로 저장되었습니다.');
+        // 버튼 복원
+        button.disabled = false;
+        button.textContent = originalText;
+      }).catch(error => {
+        console.error("답변 저장 중 오류:", error);
+        alert('답변 저장 중 오류가 발생했습니다.');
+        // 버튼 복원
+        button.disabled = false;
+        button.textContent = originalText;
+      });
+    }
+
+    // 공지사항 작성
+    document.getElementById('noticeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const title = document.getElementById('noticeTitle').value.trim();
+      const body = document.getElementById('noticeBody').value.trim();
+      const important = document.getElementById('importantNotice').checked;
+      
+      if (!title || !body) {
+        alert('제목과 내용을 모두 입력해주세요.');
+        return;
+      }
+
+      // 버튼 비활성화
+      const submitBtn = document.getElementById('submitNoticeBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '등록 중...';
+
+      db.collection("notices").add({
+        title: title,
+        body: body,
+        important: important,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        alert('공지사항이 성공적으로 등록되었습니다.');
+        
+        // 폼 초기화
+        document.getElementById('noticeTitle').value = '';
+        document.getElementById('noticeBody').value = '';
+        document.getElementById('importantNotice').checked = false;
+        
+        // 버튼 복원
+        submitBtn.disabled = false;
+        submitBtn.textContent = '공지사항 등록';
+        
+      }).catch(error => {
+        console.error("공지사항 등록 중 오류:", error);
+        alert('공지사항 등록 중 오류가 발생했습니다.');
+        
+        // 버튼 복원
+        submitBtn.disabled = false;
+        submitBtn.textContent = '공지사항 등록';
+      });
+    });
+  </script>
+</body>
+</html>
