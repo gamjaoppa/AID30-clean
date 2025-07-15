@@ -1,4 +1,4 @@
-/* Footer */<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -91,13 +91,13 @@
 
     /* Course Details Section */
     .course-details {
-      padding: 80px 0;
+      padding: 40px 0;
       background: #f8fafc;
       border-top: 1px solid #e5e7eb;
     }
 
     .course-details-container {
-      max-width: 800px;
+      max-width: 700px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -105,42 +105,45 @@
     .course-details-card {
       background: white;
       border: 2px solid #3b82f6;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
       text-align: left;
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     .course-details h3 {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: bold;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       text-align: center;
       color: #1e3a8a;
     }
 
     .course-details ul {
       list-style: none;
-      margin-bottom: 32px;
-    }
-
-    .course-details ul li {
-      margin-bottom: 12px;
-      padding: 8px 0;
+      margin-bottom: 16px;
     }
 
     .course-details ul li strong {
       color: #1f2937;
       display: inline-block;
-      min-width: 120px;
+      min-width: 100px;
+      font-weight: 700;
+    }
+
+    .course-details ul li {
+      margin-bottom: 8px;
+      padding: 4px 0;
+      color: #374151;
+      font-size: 14px;
     }
 
     .course-details .buttons-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 24px;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
@@ -148,10 +151,10 @@
       background: #3b82f6;
       color: white;
       font-weight: bold;
-      padding: 12px 32px;
+      padding: 10px 24px;
       border-radius: 8px;
       text-decoration: none;
-      font-size: 18px;
+      font-size: 16px;
       display: inline-block;
       transition: all 0.3s ease;
     }
@@ -517,6 +520,8 @@
       background: currentColor;
       flex-shrink: 0;
     }
+
+    /* Footer */
     .footer {
       background: #1f2937;
       color: white;
@@ -809,118 +814,4 @@
             <div class="feature-icon">🔄</div>
             <div class="feature-content">
               <h4>온·오프라인 융합 교육</h4>
-              <p>온라인에서 기초를, 오프라인 캠프로 실무 역량을 완성하는 효율적 학습을 경험하세요.</p>
-            </div>
-          </div>
-          
-          <div class="feature-item">
-            <div class="feature-icon">🏆</div>
-            <div class="feature-content">
-              <h4>공신력 있는 인증 및 지원</h4>
-              <p>수료 시 디지털 배지를 발급하고, 우수 수료생을 위한 경력 개발을 지원합니다.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <p>&copy; 2025 대구한의대학교 AID 30+ 집중캠프 고객센터. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- 🔥 Firebase SDK 및 초기화 코드 -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
-      authDomain: "aid-30.firebaseapp.com",
-      projectId: "aid-30",
-      storageBucket: "aid-30.firebasestorage.app",
-      messagingSenderId: "349219806494",
-      appId: "1:349219806494:web:0366223e152abbd878bd0f",
-      measurementId: "G-FV4P6YXEM4"
-    };
-
-    // Firebase 초기화
-    firebase.initializeApp(firebaseConfig);
-
-    // 필요 시 사용할 전역 객체
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const rtdb = firebase.database();
-
-    // Floating Navigation 기능
-    document.addEventListener('DOMContentLoaded', function() {
-      const floatingNav = document.getElementById('floatingNav');
-      const navLinks = floatingNav.querySelectorAll('a');
-      const sections = document.querySelectorAll('section[id]');
-      
-      // 스크롤 시 현재 섹션 하이라이트
-      function updateActiveNav() {
-        let currentSection = '';
-        
-        sections.forEach(section => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            currentSection = section.id;
-          }
-        });
-        
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.dataset.section === currentSection) {
-            link.classList.add('active');
-          }
-        });
-      }
-      
-      // 스크롤 시 네비게이션 표시/숨김
-      function toggleFloatingNav() {
-        const scrollY = window.scrollY;
-        const heroHeight = document.querySelector('.hero').offsetHeight;
-        
-        if (scrollY > heroHeight / 2) {
-          floatingNav.classList.remove('hidden');
-        } else {
-          floatingNav.classList.add('hidden');
-        }
-      }
-      
-      // 부드러운 스크롤
-      navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          const targetId = this.getAttribute('href');
-          const targetSection = document.querySelector(targetId);
-          
-          if (targetSection) {
-            const offsetTop = targetSection.offsetTop - 80;
-            window.scrollTo({
-              top: offsetTop,
-              behavior: 'smooth'
-            });
-          }
-        });
-      });
-      
-      // 스크롤 이벤트 리스너
-      window.addEventListener('scroll', function() {
-        updateActiveNav();
-        toggleFloatingNav();
-      });
-      
-      // 초기 설정
-      toggleFloatingNav();
-      updateActiveNav();
-    });
-  </script>
-</body>
-</html>
+              <p>온라인에서 기초를, 오프라인 캠프로 실무 역량을 완성하는 효율적 학습을 경험하세요.</p
