@@ -1,85 +1,465 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>관리자 페이지</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>관리자 로그인 - 대구한의대학교 AID 30+</title>
   <style>
-    body { font-family: sans-serif; max-width: 900px; margin: auto; padding: 20px; }
-    h1 { color: #0d47a1; }
-    .card { border: 1px solid #bbdefb; padding: 16px; border-radius: 8px; margin: 12px 0; }
-    textarea { width: 100%; height: 60px; margin-top: 8px; }
-    button { background: #1976d2; color: white; border: none; padding: 8px 14px; margin-top: 5px; border-radius: 4px; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f8fafc;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Login Section */
+    .login-section {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .login-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .login-card {
+      background: #f8fafc;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-header h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .login-header p {
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1f2937;
+      font-size: 15px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background-color: white;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
+    }
+
+    .login-btn:disabled {
+      background: #9ca3af;
+      transform: none;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .warning-box {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .warning-box h4 {
+      color: #92400e;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .warning-box p {
+      color: #78350f;
+      font-size: 14px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .login-card {
+        padding: 24px;
+      }
+
+      .login-section {
+        padding: 40px 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>관리자 로그인</h1>
-  <div id="loginBox">
-    이메일 <input id="email" type="email">
-    비밀번호 <input id="pw" type="password">
-    <button onclick="login()">로그인</button>
-  </div>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">대구한의대 AID 30+</a>
+      <ul class="nav-links">
+        <li><a href="contact.html">📝 문의 작성</a></li>
+        <li><a href="notices.html">📢 공지사항</a></li>
+        <li><a href="inquiries.html">📋 문의 내역</a></li>
+        <li><a href="admin.html" class="active">⚙️ 관리자</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <div id="adminArea" style="display:none;">
-    <h2>문의 답변</h2>
-    <div id="inqList"></div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <h1>관리자 로그인</h1>
+      <p>관리자 전용 페이지에 접근하기 위해 로그인해주세요</p>
+    </div>
+  </section>
 
-    <h2>공지 작성</h2>
-    제목 <input id="ntTitle" style="width:100%"><br>
-    내용 <textarea id="ntBody"></textarea><br>
-    <button onclick="postNotice()">공지 올리기</button>
-  </div>
+  <!-- Login Section -->
+  <section class="login-section">
+    <div class="login-container">
+      <div class="warning-box">
+        <h4>🔒 관리자 전용</h4>
+        <p>이 페이지는 관리자만 접근할 수 있습니다. 승인된 계정으로만 로그인이 가능합니다.</p>
+      </div>
 
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
+      <div class="login-card">
+        <div class="login-header">
+          <h2>로그인</h2>
+          <p>관리자 계정 정보를 입력해주세요</p>
+        </div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" name="email" required placeholder="관리자 이메일을 입력하세요">
+          </div>
+
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" required placeholder="비밀번호를 입력하세요">
+          </div>
+
+          <button type="submit" id="loginBtn" class="login-btn">로그인</button>
+
+          <div id="errorMessage" class="error-message"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 🔥 Firebase SDK 및 초기화 코드 -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
   <script>
-    function login() {
-      auth.signInWithEmailAndPassword(email.value, pw.value).catch(err => alert(err.message));
+    const firebaseConfig = {
+      apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
+      authDomain: "aid-30.firebaseapp.com",
+      projectId: "aid-30",
+      storageBucket: "aid-30.firebasestorage.app",
+      messagingSenderId: "349219806494",
+      appId: "1:349219806494:web:0366223e152abbd878bd0f",
+      measurementId: "G-FV4P6YXEM4"
+    };
+
+    // Firebase 초기화
+    firebase.initializeApp(firebaseConfig);
+
+    // 필요 시 사용할 전역 객체
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const rtdb = firebase.database();
+
+    // DOM 요소
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorMessage = document.getElementById('errorMessage');
+
+    // 에러 메시지 표시 함수
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = 'block';
     }
 
-    auth.onAuthStateChanged(user => {
+    // 에러 메시지 숨기기 함수
+    function hideError() {
+      errorMessage.style.display = 'none';
+    }
+
+    // 로딩 상태 설정 함수
+    function setLoading(isLoading) {
+      loginBtn.disabled = isLoading;
+      loginBtn.textContent = isLoading ? '로그인 중...' : '로그인';
+    }
+
+    // 로그인 함수
+    function login(email, password) {
+      setLoading(true);
+      hideError();
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // 로그인 성공
+          console.log('로그인 성공:', userCredential.user);
+          // admin_inquiries.html로 리다이렉트
+          window.location.href = 'admin_inquiries.html';
+        })
+        .catch((error) => {
+          // 로그인 실패
+          console.error('로그인 오류:', error);
+          let errorMsg = '로그인에 실패했습니다.';
+          
+          switch (error.code) {
+            case 'auth/user-not-found':
+              errorMsg = '존재하지 않는 이메일입니다.';
+              break;
+            case 'auth/wrong-password':
+              errorMsg = '비밀번호가 올바르지 않습니다.';
+              break;
+            case 'auth/invalid-email':
+              errorMsg = '올바르지 않은 이메일 형식입니다.';
+              break;
+            case 'auth/too-many-requests':
+              errorMsg = '너무 많은 로그인 시도가 있었습니다. 잠시 후 다시 시도해주세요.';
+              break;
+            default:
+              errorMsg = error.message;
+          }
+          
+          showError(errorMsg);
+          setLoading(false);
+        });
+    }
+
+    // 폼 제출 이벤트 처리
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email || !password) {
+        showError('이메일과 비밀번호를 모두 입력해주세요.');
+        return;
+      }
+
+      login(email, password);
+    });
+
+    // 이미 로그인된 상태인지 확인
+    auth.onAuthStateChanged((user) => {
       if (user) {
-        loginBox.style.display = "none";
-        adminArea.style.display = "block";
-        loadInquiries();
+        // 이미 로그인된 경우 admin_inquiries.html로 리다이렉트
+        window.location.href = 'admin_inquiries.html';
       }
     });
 
-    function loadInquiries() {
-      db.collection("inquiries").orderBy("createdAt", "desc").onSnapshot(snap => {
-        inqList.innerHTML = "";
-        snap.forEach(doc => {
-          const d = doc.data();
-          const el = document.createElement("div");
-          el.className = "card";
-          el.innerHTML = `
-            <b>${d.name}</b> (${d.email})<br>
-            <small>${d.createdAt?.toDate().toLocaleString()}</small><p>${d.message}</p>
-            <textarea id="rep_${doc.id}">${d.reply || ""}</textarea>
-            <button onclick="saveReply('${doc.id}')">답변 저장</button>
-          `;
-          inqList.appendChild(el);
-        });
-      });
-    }
+    // 입력 필드에서 엔터키 처리
+    emailInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        passwordInput.focus();
+      }
+    });
 
-    function saveReply(id) {
-      const reply = document.getElementById("rep_" + id).value.trim();
-      db.collection("inquiries").doc(id).update({ reply });
-    }
-
-    function postNotice() {
-      db.collection("notices").add({
-        title: ntTitle.value,
-        body: ntBody.value,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        ntTitle.value = "";
-        ntBody.value = "";
-        alert("공지사항이 등록되었습니다.");
-      });
-    }
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        loginForm.dispatchEvent(new Event('submit'));
+      }
+    });
   </script>
 </body>
 </html>
