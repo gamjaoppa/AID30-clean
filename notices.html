@@ -1,36 +1,432 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>공지사항</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>공지사항 - 대구한의대학교 AID 30+</title>
   <style>
-    body { font-family: sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-    h1 { color: #0d47a1; }
-    .notice { border-bottom: 1px solid #bbdefb; padding: 12px 0; }
-    .notice h3 { margin: 0; color: #1976d2; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f8fafc;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Notices Section */
+    .notices-section {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .notices-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    .notices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .notice-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .notice-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .notice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .notice-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin: 0;
+      flex: 1;
+    }
+
+    .notice-date {
+      font-size: 14px;
+      color: #6b7280;
+      background: #e5e7eb;
+      padding: 4px 12px;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    .notice-content {
+      color: #374151;
+      line-height: 1.6;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .notice-important {
+      border-left-color: #ef4444;
+    }
+
+    .notice-important .notice-title {
+      color: #dc2626;
+    }
+
+    .notice-important .notice-title::before {
+      content: "📢 ";
+      margin-right: 4px;
+    }
+
+    .no-notices {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .no-notices-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .no-notices h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    .no-notices p {
+      margin-bottom: 24px;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #6b7280;
+    }
+
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e5e7eb;
+      border-top: 3px solid #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .notice-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .notice-title {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+
+      .notices-section {
+        padding: 40px 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>공지사항</h1>
-  <div id="ntList"></div>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">대구한의대 AID 30+</a>
+      <ul class="nav-links">
+        <li><a href="contact.html">📝 문의 작성</a></li>
+        <li><a href="notices.html" class="active">📢 공지사항</a></li>
+        <li><a href="inquiries.html">📋 문의 내역</a></li>
+        <li><a href="admin.html">⚙️ 관리자</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <h1>공지사항</h1>
+      <p>교육 과정과 관련된 중요한 안내사항을 확인하세요</p>
+    </div>
+  </section>
+
+  <!-- Notices Section -->
+  <section class="notices-section">
+    <div class="notices-container">
+      <div class="section-header">
+        <h2>공지게시판</h2>
+        <p>최신 공지사항을 시간순으로 확인할 수 있습니다</p>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>공지사항을 불러오는 중...</p>
+      </div>
+
+      <div id="notices-list" class="notices-list" style="display: none;"></div>
+
+      <div id="no-notices" class="no-notices" style="display: none;">
+        <div class="no-notices-icon">📢</div>
+        <h3>등록된 공지사항이 없습니다</h3>
+        <p>새로운 공지사항이 등록되면 여기에 표시됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 🔥 Firebase SDK 및 초기화 코드 -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
   <script>
-    db.collection("notices").orderBy("createdAt", "desc").onSnapshot(snap => {
-      ntList.innerHTML = "";
-      snap.forEach(doc => {
-        const d = doc.data();
-        ntList.innerHTML += `
-          <div class="notice">
-            <h3>${d.title}</h3>
-            <small>${d.createdAt?.toDate().toLocaleDateString()}</small>
-            <p>${d.body}</p>
-          </div>
-        `;
-      });
-    });
+    const firebaseConfig = {
+      apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
+      authDomain: "aid-30.firebaseapp.com",
+      projectId: "aid-30",
+      storageBucket: "aid-30.firebasestorage.app",
+      messagingSenderId: "349219806494",
+      appId: "1:349219806494:web:0366223e152abbd878bd0f",
+      measurementId: "G-FV4P6YXEM4"
+    };
+
+    // Firebase 초기화
+    firebase.initializeApp(firebaseConfig);
+
+    // 필요 시 사용할 전역 객체
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const rtdb = firebase.database();
+
+    // 공지사항 로드
+    function loadNotices() {
+      const loadingEl = document.getElementById("loading");
+      const listEl = document.getElementById("notices-list");
+      const noNoticesEl = document.getElementById("no-notices");
+
+      db.collection("notices")
+        .orderBy("createdAt", "desc")
+        .onSnapshot(snapshot => {
+          // 로딩 숨기기
+          loadingEl.style.display = "none";
+          
+          if (snapshot.empty) {
+            // 공지사항이 없는 경우
+            listEl.style.display = "none";
+            noNoticesEl.style.display = "block";
+            return;
+          }
+
+          // 공지사항이 있는 경우
+          noNoticesEl.style.display = "none";
+          listEl.style.display = "flex";
+          listEl.innerHTML = "";
+
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            const date = data.createdAt?.toDate ? 
+              data.createdAt.toDate().toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              }) : "날짜 정보 없음";
+
+            const noticeCard = document.createElement("div");
+            noticeCard.className = `notice-card ${data.important ? 'notice-important' : ''}`;
+            
+            noticeCard.innerHTML = `
+              <div class="notice-header">
+                <h3 class="notice-title">${data.title || "제목 없음"}</h3>
+                <span class="notice-date">${date}</span>
+              </div>
+              <div class="notice-content">
+                ${data.body ? data.body.replace(/\n/g, '<br>') : "내용 없음"}
+              </div>
+            `;
+            
+            listEl.appendChild(noticeCard);
+          });
+        }, error => {
+          console.error("공지사항 로드 중 오류:", error);
+          loadingEl.innerHTML = `
+            <p style="color: #ef4444;">공지사항을 불러오는 중 오류가 발생했습니다.</p>
+            <p style="color: #6b7280; font-size: 14px;">잠시 후 다시 시도해주세요.</p>
+          `;
+        });
+    }
+
+    // 페이지 로드 시 공지사항 로드
+    document.addEventListener('DOMContentLoaded', loadNotices);
   </script>
 </body>
 </html>
