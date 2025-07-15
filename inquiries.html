@@ -1,116 +1,483 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>문의 게시판</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>문의 내역 보기 - 대구한의대학교 AID 30+</title>
   <style>
-    body {
-      font-family: 'Apple SD Gothic Neo', sans-serif;
-      background-color: #f2f6ff;
+    * {
       margin: 0;
-      padding: 40px 16px;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .container {
-      max-width: 780px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 40px 32px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    }
-
-    h1 {
-      color: #0d47a1;
-      font-size: 26px;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-
-    .card {
-      border: 1px solid #d1e3f8;
-      border-radius: 10px;
-      padding: 24px;
-      margin-bottom: 20px;
-      background-color: #fafcff;
-      transition: box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .card b {
-      font-size: 17px;
-      color: #0d47a1;
-    }
-
-    .card small {
-      font-size: 14px;
-      color: #777;
-    }
-
-    .card p {
-      font-size: 16px;
-      color: #333;
-      margin-top: 10px;
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f8fafc;
       line-height: 1.6;
     }
 
-    .reply {
-      background-color: #e3f2fd;
-      padding: 16px;
-      border-left: 4px solid #2196f3;
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
       border-radius: 6px;
-      margin-top: 18px;
-      font-size: 15px;
-      color: #1a237e;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Inquiries Section */
+    .inquiries-section {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .inquiries-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    .inquiries-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .inquiry-card {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .inquiry-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .inquiry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .inquiry-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin: 0;
+    }
+
+    .inquiry-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .inquiry-author {
+      font-weight: 500;
+      color: #374151;
+    }
+
+    .inquiry-date {
+      opacity: 0.8;
+    }
+
+    .inquiry-content {
+      color: #374151;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      padding: 16px;
+      background: white;
+      border-radius: 8px;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .inquiry-reply {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .inquiry-reply-header {
+      font-weight: 600;
+      color: #1e40af;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .inquiry-reply-content {
+      color: #1e40af;
+      line-height: 1.6;
+    }
+
+    .no-inquiries {
+      text-align: center;
+      padding: 60px 20px;
+      color: #6b7280;
+    }
+
+    .no-inquiries-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .no-inquiries h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    .no-inquiries p {
+      margin-bottom: 24px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: #6b7280;
+    }
+
+    .loading-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #e5e7eb;
+      border-top: 3px solid #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .inquiry-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .inquiry-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .inquiries-section {
+        padding: 40px 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>문의 게시판</h1>
-    <div id="list"></div>
-  </div>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">대구한의대 AID 30+</a>
+      <ul class="nav-links">
+        <li><a href="contact.html">📝 문의 작성</a></li>
+        <li><a href="notices.html">📢 공지사항</a></li>
+        <li><a href="inquiries.html" class="active">📋 문의 내역</a></li>
+        <li><a href="admin.html">⚙️ 관리자</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <!-- Firebase 라이브러리 -->
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore-compat.js"></script>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <h1>문의 내역 보기</h1>
+      <p>등록된 문의사항과 답변을 확인하실 수 있습니다</p>
+    </div>
+  </section>
 
-  <!-- Firebase 설정 및 초기화 -->
+  <!-- Inquiries Section -->
+  <section class="inquiries-section">
+    <div class="inquiries-container">
+      <div class="section-header">
+        <h2>문의 게시판</h2>
+        <p>모든 문의사항과 답변을 시간순으로 확인할 수 있습니다</p>
+      </div>
+
+      <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>문의 내역을 불러오는 중...</p>
+      </div>
+
+      <div id="inquiries-list" class="inquiries-list" style="display: none;"></div>
+
+      <div id="no-inquiries" class="no-inquiries" style="display: none;">
+        <div class="no-inquiries-icon">📝</div>
+        <h3>등록된 문의가 없습니다</h3>
+        <p>첫 번째 문의를 등록해보세요!</p>
+        <a href="contact.html" class="btn-primary">문의 작성하기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2025 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 🔥 Firebase SDK 및 초기화 코드 -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
       authDomain: "aid-30.firebaseapp.com",
       projectId: "aid-30",
-      storageBucket: "aid-30.appspot.com",
+      storageBucket: "aid-30.firebasestorage.app",
       messagingSenderId: "349219806494",
       appId: "1:349219806494:web:0366223e152abbd878bd0f",
       measurementId: "G-FV4P6YXEM4"
     };
 
+    // Firebase 초기화
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
 
-    db.collection("inquiries")
-      .orderBy("createdAt", "desc")
-      .onSnapshot(snapshot => {
-        const list = document.getElementById("list");
-        list.innerHTML = "";
-        snapshot.forEach(doc => {
-          const d = doc.data();
-          const date = d.createdAt?.toDate ? d.createdAt.toDate().toLocaleString() : "시간 없음";
-          const div = document.createElement("div");
-          div.className = "card";
-          div.innerHTML = `
-            <b>${d.name ?? "이름 없음"}</b> · <small>${date}</small><br>
-            <p>${d.message ?? "내용 없음"}</p>
-            ${d.reply ? `<div class="reply"><strong>답변:</strong><br>${d.reply}</div>` : ""}
+    // 필요 시 사용할 전역 객체
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const rtdb = firebase.database();
+
+    // 문의 내역 로드
+    function loadInquiries() {
+      const loadingEl = document.getElementById("loading");
+      const listEl = document.getElementById("inquiries-list");
+      const noInquiriesEl = document.getElementById("no-inquiries");
+
+      db.collection("inquiries")
+        .orderBy("createdAt", "desc")
+        .onSnapshot(snapshot => {
+          // 로딩 숨기기
+          loadingEl.style.display = "none";
+          
+          if (snapshot.empty) {
+            // 문의가 없는 경우
+            listEl.style.display = "none";
+            noInquiriesEl.style.display = "block";
+            return;
+          }
+
+          // 문의가 있는 경우
+          noInquiriesEl.style.display = "none";
+          listEl.style.display = "flex";
+          listEl.innerHTML = "";
+
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            const date = data.createdAt?.toDate ? 
+              data.createdAt.toDate().toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              }) : "시간 정보 없음";
+
+            const inquiryCard = document.createElement("div");
+            inquiryCard.className = "inquiry-card";
+            
+            inquiryCard.innerHTML = `
+              <div class="inquiry-header">
+                <h3 class="inquiry-title">${data.subject || data.message?.substring(0, 50) + '...' || "제목 없음"}</h3>
+                <div class="inquiry-meta">
+                  <span class="inquiry-author">${data.name || "익명"}</span>
+                  <span class="inquiry-date">${date}</span>
+                </div>
+              </div>
+              <div class="inquiry-content">
+                ${data.message ? data.message.replace(/\n/g, '<br>') : "내용 없음"}
+              </div>
+              ${data.reply ? `
+                <div class="inquiry-reply">
+                  <div class="inquiry-reply-header">
+                    💬 관리자 답변
+                  </div>
+                  <div class="inquiry-reply-content">
+                    ${data.reply.replace(/\n/g, '<br>')}
+                  </div>
+                </div>
+              ` : ""}
+            `;
+            
+            listEl.appendChild(inquiryCard);
+          });
+        }, error => {
+          console.error("문의 내역 로드 중 오류:", error);
+          loadingEl.innerHTML = `
+            <p style="color: #ef4444;">문의 내역을 불러오는 중 오류가 발생했습니다.</p>
+            <p style="color: #6b7280; font-size: 14px;">잠시 후 다시 시도해주세요.</p>
           `;
-          list.appendChild(div);
         });
-      });
+    }
+
+    // 페이지 로드 시 문의 내역 로드
+    document.addEventListener('DOMContentLoaded', loadInquiries);
   </script>
 </body>
 </html>
