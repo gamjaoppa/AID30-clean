@@ -1,96 +1,376 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>문의하기</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>문의 작성하기 - 대구한의대학교 AID 30+</title>
   <style>
-    body {
-      font-family: 'Apple SD Gothic Neo', sans-serif;
-      background-color: #f2f6ff;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    .container {
-      max-width: 640px;
-      margin: 50px auto;
-      background: #fff;
-      padding: 40px 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      background-color: #f8fafc;
+      line-height: 1.6;
     }
 
-    h1 {
+    /* Navigation */
+    .navbar {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 16px;
+      border-radius: 6px;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: white;
+      padding: 60px 0;
       text-align: center;
-      color: #0d47a1;
-      margin-bottom: 32px;
-      font-size: 26px;
     }
 
-    label {
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Contact Form Section */
+    .contact-section {
+      padding: 60px 0;
+      background: white;
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .form-container {
+      background: #f8fafc;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .form-header h2 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      color: #6b7280;
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
       display: block;
       font-weight: 600;
-      margin-top: 20px;
-      margin-bottom: 6px;
-      color: #0d47a1;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
+      margin-bottom: 8px;
+      color: #1f2937;
       font-size: 15px;
-      border: 1px solid #cfd8dc;
-      border-radius: 6px;
-      background-color: #f9fcff;
-      transition: border 0.2s ease;
     }
 
-    input:focus, textarea:focus {
-      outline: none;
-      border: 1.5px solid #1976d2;
-      background-color: #ffffff;
+    .required {
+      color: #ef4444;
     }
 
-    textarea {
-      resize: vertical;
-      min-height: 120px;
-    }
-
-    button {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
-      background: #1976d2;
+      padding: 14px 16px;
+      font-size: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background-color: white;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 140px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #3b82f6, #1e3a8a);
       color: white;
-      font-size: 17px;
-      font-weight: bold;
-      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 24px;
       border: none;
       border-radius: 8px;
-      margin-top: 30px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      margin-top: 16px;
     }
 
-    button:hover {
-      background: #125aa6;
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .info-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .info-box h4 {
+      color: #1e40af;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .info-box ul {
+      color: #374151;
+      margin-left: 20px;
+    }
+
+    .info-box li {
+      margin-bottom: 4px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .form-container {
+        padding: 24px;
+      }
+
+      .form-header h2 {
+        font-size: 24px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .contact-section {
+        padding: 40px 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>문의하기</h1>
-    <form id="inquiryForm">
-      <label for="name">이름</label>
-      <input type="text" id="name" required>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">대구한의대 AID 30+</div>
+      <ul class="nav-links">
+        <li><a href="contact.html" class="active">📝 문의 작성</a></li>
+        <li><a href="notices.html">📢 공지사항</a></li>
+        <li><a href="inquiries.html">📋 문의 내역</a></li>
+        <li><a href="admin.html">⚙️ 관리자</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <label for="email">이메일</label>
-      <input type="email" id="email" required>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <h1>문의 작성하기</h1>
+      <p>교육 과정에 대한 궁금한 점이나 기술적 문제를 문의해주세요</p>
+    </div>
+  </section>
 
-      <label for="message">문의 내용</label>
-      <textarea id="message" required></textarea>
+  <!-- Contact Form Section -->
+  <section class="contact-section">
+    <div class="contact-container">
+      <div class="info-box">
+        <h4>문의하기 전에 확인해주세요</h4>
+        <ul>
+          <li>공지사항을 먼저 확인하여 이미 답변된 내용인지 확인해주세요</li>
+          <li>기술적 문제의 경우 상세한 상황 설명을 포함해주세요</li>
+          <li>문의 답변은 영업일 기준 1-2일 내에 이메일로 회신됩니다</li>
+        </ul>
+      </div>
 
-      <button type="submit">문의 보내기</button>
-    </form>
-  </div>
+      <div class="form-container">
+        <div class="form-header">
+          <h2>문의 등록</h2>
+          <p>아래 양식을 작성하여 문의사항을 등록해주세요</p>
+        </div>
+
+        <form id="inquiryForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">이름 <span class="required">*</span></label>
+              <input type="text" id="name" name="name" required placeholder="이름을 입력해주세요">
+            </div>
+            <div class="form-group">
+              <label for="email">이메일 <span class="required">*</span></label>
+              <input type="email" id="email" name="email" required placeholder="답변받을 이메일을 입력해주세요">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">연락처</label>
+              <input type="tel" id="phone" name="phone" placeholder="연락처를 입력해주세요 (선택사항)">
+            </div>
+            <div class="form-group">
+              <label for="category">문의 유형 <span class="required">*</span></label>
+              <select id="category" name="category" required>
+                <option value="">문의 유형을 선택해주세요</option>
+                <option value="course">교육 과정 관련</option>
+                <option value="registration">수강 신청 관련</option>
+                <option value="technical">기술적 문제</option>
+                <option value="certificate">수료증 관련</option>
+                <option value="other">기타</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">제목 <span class="required">*</span></label>
+            <input type="text" id="subject" name="subject" required placeholder="문의 제목을 입력해주세요">
+          </div>
+
+          <div class="form-group">
+            <label for="message">문의 내용 <span class="required">*</span></label>
+            <textarea id="message" name="message" required placeholder="문의하실 내용을 상세히 작성해주세요.&#10;&#10;기술적 문제의 경우:&#10;- 사용 중인 브라우저와 버전&#10;- 오류 발생 시점과 상황&#10;- 오류 메시지 (있는 경우)&#10;&#10;위 정보를 포함해주시면 더 빠른 해결이 가능합니다."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">문의 등록하기</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+    </div>
+  </footer>
 
   <!-- Firebase v9 모듈 방식 -->
   <script type="module">
