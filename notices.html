@@ -400,7 +400,7 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-container">
-      <p>&copy; 2024 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
+      <p>&copy; 2025 대구한의대학교 AID 30+ 고객센터. All rights reserved.</p>
     </div>
   </footer>
 
@@ -408,6 +408,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-storage-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
   <script>
@@ -455,6 +456,13 @@
 
           snapshot.forEach(doc => {
             const data = doc.data();
+            
+            // 디버깅용 - 콘솔에 데이터 출력
+            console.log('공지사항 데이터:', data);
+            if (data.attachments) {
+              console.log('첨부파일 정보:', data.attachments);
+            }
+            
             const date = data.createdAt?.toDate ? 
               data.createdAt.toDate().toLocaleDateString('ko-KR', {
                 year: 'numeric',
@@ -465,6 +473,25 @@
             const noticeCard = document.createElement("div");
             noticeCard.className = `notice-card ${data.important ? 'notice-important' : ''}`;
             
+            // 첨부파일 HTML 생성
+            let attachmentsHtml = '';
+            if (data.attachments && Array.isArray(data.attachments) && data.attachments.length > 0) {
+              attachmentsHtml = `
+                <div class="attachments-section">
+                  <div class="attachments-header">
+                    📎 첨부파일 (${data.attachments.length}개)
+                  </div>
+                  ${data.attachments.map(attachment => `
+                    <div class="attachment-item">
+                      <div class="attachment-icon">${getFileIcon(attachment.type || attachment.mimeType)}</div>
+                      <a href="${attachment.url}" target="_blank" rel="noopener noreferrer" class="attachment-name">${attachment.name}</a>
+                      <span class="attachment-size">${formatFileSize(attachment.size)}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              `;
+            }
+            
             noticeCard.innerHTML = `
               <div class="notice-header">
                 <h3 class="notice-title">${data.title || "제목 없음"}</h3>
@@ -473,20 +500,7 @@
               <div class="notice-content">
                 ${data.body ? data.body.replace(/\n/g, '<br>') : "내용 없음"}
               </div>
-              ${data.attachments && data.attachments.length > 0 ? `
-                <div class="attachments-section">
-                  <div class="attachments-header">
-                    📎 첨부파일 (${data.attachments.length}개)
-                  </div>
-                  ${data.attachments.map(attachment => `
-                    <div class="attachment-item">
-                      <div class="attachment-icon">${getFileIcon(attachment.type)}</div>
-                      <a href="${attachment.url}" target="_blank" class="attachment-name">${attachment.name}</a>
-                      <span class="attachment-size">${formatFileSize(attachment.size)}</span>
-                    </div>
-                  `).join('')}
-                </div>
-              ` : ""}
+              ${attachmentsHtml}
             `;
             
             listEl.appendChild(noticeCard);
@@ -506,23 +520,45 @@
     // 파일 아이콘 얻기
     function getFileIcon(mimeType) {
       if (!mimeType) return '📄';
-      if (mimeType.startsWith('image/')) return '🖼️';
-      if (mimeType.includes('pdf')) return 'PDF';
-      if (mimeType.includes('word') || mimeType.includes('document')) return 'DOC';
-      if (mimeType.includes('excel') || mimeType.includes('spreadsheet')) return 'XLS';
-      if (mimeType.includes('powerpoint') || mimeType.includes('presentation')) return 'PPT';
-      if (mimeType.includes('text')) return 'TXT';
-      if (mimeType.includes('zip') || mimeType.includes('rar')) return '📦';
+      
+      // 문자열로 변환 후 소문자로 처리
+      const type = String(mimeType).toLowerCase();
+      
+      if (type.includes('image') || type.includes('jpg') || type.includes('jpeg') || type.includes('png') || type.includes('gif')) return '🖼️';
+      if (type.includes('pdf')) return 'PDF';
+      if (type.includes('word') || type.includes('document') || type.includes('docx') || type.includes('doc')) return 'DOC';
+      if (type.includes('excel') || type.includes('spreadsheet') || type.includes('xlsx') || type.includes('xls')) return 'XLS';
+      if (type.includes('powerpoint') || type.includes('presentation') || type.includes('pptx') || type.includes('ppt')) return 'PPT';
+      if (type.includes('text') || type.includes('txt')) return 'TXT';
+      if (type.includes('zip') || type.includes('rar') || type.includes('7z')) return '📦';
+      if (type.includes('video') || type.includes('mp4') || type.includes('avi')) return '🎥';
+      if (type.includes('audio') || type.includes('mp3') || type.includes('wav')) return '🎵';
       return '📄';
     }
 
     // 파일 크기 포맷
     function formatFileSize(bytes) {
-      if (!bytes || bytes === 0) return '0 Bytes';
+      if (!bytes || bytes === 0) return '알 수 없음';
+      
+      // 숫자로 변환
+      const size = Number(bytes);
+      if (isNaN(size)) return '알 수 없음';
+      
       const k = 1024;
       const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      const i = Math.floor(Math.log(size) / Math.log(k));
+      return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // 디버깅을 위한 함수 추가
+    function debugNoticeData(data) {
+      console.log('공지사항 데이터:', data);
+      if (data.attachments) {
+        console.log('첨부파일 정보:', data.attachments);
+        data.attachments.forEach((att, index) => {
+          console.log(`첨부파일 ${index + 1}:`, att);
+        });
+      }
     }
   </script>
 </body>
