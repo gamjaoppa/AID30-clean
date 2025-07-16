@@ -872,13 +872,23 @@
       // 스크롤 시 현재 섹션 하이라이트
       function updateActiveNav() {
         let currentSection = '';
+        const scrollPosition = window.scrollY + 200;
         
-        sections.forEach(section => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
-            currentSection = section.id;
-          }
-        });
+        // 페이지 하단 근처에서는 마지막 섹션을 활성화
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+          currentSection = 'features';
+        } else {
+          // 일반적인 섹션 감지
+          sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const sectionTop = section.offsetTop;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+              currentSection = section.id;
+            }
+          });
+        }
         
         navLinks.forEach(link => {
           link.classList.remove('active');
