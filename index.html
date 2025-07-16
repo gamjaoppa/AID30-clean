@@ -38,8 +38,18 @@
     }
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-size: 20px;
       font-weight: bold;
+    }
+
+    .logo-image {
+      width: 40px;
+      height: 40px;
+      background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRBZWQ+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+CjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMGIwOTYiLz4KPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiM0Nzc3ZGMiLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMjIzM2I4Ii8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPHBhdGggZD0iTTIwIDMuNUMxMC42IDMuNSAzIDEwLjQgMyAyMEM1IDEwLjQgMTAuNiAzLjUgMjAgMy41WiIgZmlsbD0idXJsKCNncmFkKSIvPgo8cGF0aCBkPSJNMzMgMzZIMTZDMTAuNSAzNiA2IDMxLjUgNiAyNkM2IDIwLjUgMTAuNSAxNiAxNiAxNkgzM0MzNCAzNiAzNyAzNCAzNyAzMkMzNyAzMCAzNCAzNiAzMyAzNloiIGZpbGw9InVybCgjZ3JhZCkiLz4KPGVSBHN0eWxlPSJmb250LWZhbWlseTpBcmlhbCxzYW5zLXNlcmlmO2ZvbnQtc2l6ZTo4cHg7Zm9udC13ZWlnaHQ6Ym9sZDtmaWxsOndoaXRlIiB4PSI2IiB5PSIxNCI+REhVPC90ZXh0Pgo8Y2lyY2xlIGN4PSI4IiBjeT0iMTgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjExIiBjeT0iMTgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjE0IiBjeT0iMTgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjE3IiBjeT0iMTgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTgiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xMCAyNkMxNCAyNSAxOCAyNSAyMiAyNkMxOCAyNyAxNCAyNyAxMCAyNloiIGZpbGw9IndoaXRlIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjAuNSIvPgo8L3N2Zz4K') no-repeat center;
+      background-size: contain;
     }
 
     .nav-links {
@@ -627,7 +637,10 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <div class="logo">대구한의대학교 AID 30+</div>
+      <div class="logo">
+        <div class="logo-image"></div>
+        <span>대구한의대학교 AID 30+</span>
+      </div>
       <ul class="nav-links">
         <li><a href="notices.html">📢 공지사항</a></li>
         <li><a href="contact.html">📝 문의 작성</a></li>
@@ -939,4 +952,4 @@
     });
   </script>
 </body>
-</html>
+</html>이
