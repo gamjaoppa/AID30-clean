@@ -40,9 +40,16 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 20px;
       font-size: 20px;
       font-weight: bold;
+      margin-left: -24px; /* 패딩만큼 빼서 완전히 왼쪽 끝으로 */
+    }
+
+    .logo img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
     }
 
     .logo-image {
@@ -640,7 +647,6 @@
       <div class="logo">
         <img src="https://raw.githubusercontent.com/gamjaoppa/AID30-clean/main/dhu_logo.png" 
              alt="" 
-             style="width: 40px; height: 40px; object-fit: contain;" 
              onload="console.log('GitHub Raw 이미지 로드 성공!');" 
              onerror="console.log('GitHub Raw 이미지 로드 실패');">
         <span>대구한의대학교 AID 30+</span>
@@ -956,4 +962,4 @@
     });
   </script>
 </body>
-</html>
+</html>이
