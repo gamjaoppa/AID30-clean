@@ -4,6 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>대구한의대학교 AID 30+ 집중캠프 </title>
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-18Z7QP6WLC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-18Z7QP6WLC');
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-5PT62QKG');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2949166978588768');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=2949166978588768&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
     * {
       margin: 0;
@@ -597,7 +633,13 @@
     }
   </style>
 </head>
+
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PT62QKG"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <!-- Floating Navigation -->
   <nav class="floating-nav" id="floatingNav">
     <ul>
@@ -737,15 +779,15 @@
         <div class="curriculum-card online-course">
           <h3>1. 데이터 분석 기초 다지기 (온라인)</h3>
           <div class="curriculum-item">
-            <h4>SQL 기초 – 데이터 다루기 첫걸음</h4>
+            <h4>SQL 기초 — 데이터 다루기 첫걸음</h4>
             <p>SQL의 핵심 문법을 통해 데이터를 선택, 필터링, 입력하는 방법을 익힙니다.</p>
           </div>
           <div class="curriculum-item">
-            <h4>SQL 실전 – 데이터를 정리하고 연결하기</h4>
+            <h4>SQL 실전 — 데이터를 정리하고 연결하기</h4>
             <p>GROUP BY, JOIN, 서브쿼리를 활용해 다중 테이블 데이터를 정리하고 분석합니다.</p>
           </div>
           <div class="curriculum-item">
-            <h4>Python & Pandas – 복잡한 데이터 쉽게 다루기</h4>
+            <h4>Python & Pandas — 복잡한 데이터 쉽게 다루기</h4>
             <p>Pandas를 이용해 다양한 데이터 형식을 정리하고, 데이터 처리 실습을 진행합니다.</p>
           </div>
           <div class="curriculum-item">
@@ -798,7 +840,7 @@
           <div class="feature-icon">🎯</div>
           <div class="feature-content">
             <h4>산업 특화 커리큘럼</h4>
-            <p>한의, 식품, 뷰티 산업 데이터를 활용하여 현업 적용 가능성을 극대화했습니다.</p>
+            <p>한의, 식품, 뷰티 산업 데이터를 활용하여 현장 적용 가능성을 극대화했습니다.</p>
           </div>
         </div>
         
@@ -829,7 +871,7 @@
         <div class="feature-item">
           <div class="feature-icon">🏆</div>
           <div class="feature-content">
-            <h4>공신력 있는 인증 및 지원</h4>
+            <h4>공식적인 인증 및 지원</h4>
             <p>수료 시 디지털 배지를 발급하고, 우수 수료생을 위한 경력 개발을 지원합니다.</p>
           </div>
         </div>
@@ -851,23 +893,37 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
-      authDomain: "aid-30.firebaseapp.com",
-      projectId: "aid-30",
-      storageBucket: "aid-30.firebasestorage.app",
-      messagingSenderId: "349219806494",
-      appId: "1:349219806494:web:0366223e152abbd878bd0f",
-      measurementId: "G-FV4P6YXEM4"
-    };
+    // Firebase SDK가 로드될 때까지 기다린 후 초기화
+    window.addEventListener('load', function() {
+      // Firebase가 정의되어 있는지 확인
+      if (typeof firebase !== 'undefined') {
+        const firebaseConfig = {
+          apiKey: "AIzaSyBr5mR5LSypWKQwGeJsfPawQly8cjdl47M",
+          authDomain: "aid-30.firebaseapp.com",
+          projectId: "aid-30",
+          storageBucket: "aid-30.firebasestorage.app",
+          messagingSenderId: "349219806494",
+          appId: "1:349219806494:web:0366223e152abbd878bd0f",
+          measurementId: "G-FV4P6YXEM4"
+        };
 
-    // Firebase 초기화
-    firebase.initializeApp(firebaseConfig);
+        try {
+          // Firebase 초기화
+          firebase.initializeApp(firebaseConfig);
 
-    // 필요 시 사용할 전역 객체
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const rtdb = firebase.database();
+          // 필요 시 사용할 전역 객체
+          window.auth = firebase.auth();
+          window.db = firebase.firestore();
+          window.rtdb = firebase.database();
+          
+          console.log('Firebase 초기화 완료');
+        } catch (error) {
+          console.log('Firebase 초기화 오류:', error);
+        }
+      } else {
+        console.log('Firebase SDK를 로드할 수 없습니다');
+      }
+    });
 
     // Floating Navigation 기능
     document.addEventListener('DOMContentLoaded', function() {
